@@ -53,8 +53,11 @@ export async function sendEmail(message: Message): Promise<EmailStatus> {
       const transport = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port,
-        secure: process.env.SMTP_SECURE ? process.env.SMTP_SECURE === "true" : port === 465,
+        secure: port === 465, // يكون صحيحاً فقط لـ 465، وfalse لـ 587
         auth: process.env.SMTP_USER ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS ?? "" } : undefined,
+        tls: {
+          rejectUnauthorized: false,
+        },
       });
       const { html, text } = render(message);
       await transport.sendMail({ from: process.env.EMAIL_FROM, to: message.to, subject: message.subject, html, text });

@@ -80,7 +80,7 @@ export default async function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="#contact" className="btn btn-amber">
-                {t("Book a consultation", "احجز استشارة")}
+                {t("Book a Free consultation", "احجز استشارة مجانية")}
                 <ArrowRight className="size-4 rtl:rotate-180" aria-hidden="true" />
               </Link>
               <Link href="#services" className="btn btn-ghost">
@@ -166,7 +166,7 @@ export default async function HomePage() {
             <div>
               <p className="text-[13px] font-semibold tracking-[0.14em] text-amber-300 uppercase">{t("Content & social media", "إدارة المحتوى والتسويق الرقمي")}</p>
               <h2 className="mt-4 text-3xl leading-tight font-semibold tracking-tight sm:text-4xl rtl:leading-snug">
-                {t("Monthly content engine that frees you from thinking", "محرّك محتوى شهري يغنيك عن التفكير")}
+                {t("Monthly content engine that frees you from thinking", "محرك محتوى شهري يغنيك عن التفكير")}
               </h2>
               <p className="mt-4 max-w-md text-lg leading-relaxed text-navy-200">
                 {t(
@@ -179,19 +179,21 @@ export default async function HomePage() {
                 <ArrowRight className="size-4 rtl:rotate-180" aria-hidden="true" />
               </Link>
             </div>
-            <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl bg-white/10">
+            <div className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl bg-white/10">
               {[
                 t("Carousel posts", "منشورات كاروسيل"),
                 t("AI-generated videos", "فيديوهات بالذكاء الاصطناعي"),
                 t("Static posts", "منشورات ثابتة"),
-                t("Real reels, filmed on site", "ريلز حقيقية تُصوَّر في الموقع"),
+                t("Real reels, filmed on site", "ريلز حقيقية تُصور في الموقع"),
               ].map((label) => (
-                <div key={label} className="bg-navy-900 p-6 sm:p-8">
-                  <dt className="text-6xl leading-none font-semibold text-amber-400 sm:text-7xl">5</dt>
-                  <dd className="mt-3 text-[15px] leading-snug text-navy-100">{label}</dd>
+                <div key={label} className="bg-navy-900 p-6 sm:p-8 flex flex-col justify-center">
+                  <div className="size-10 rounded-xl bg-amber-400/10 text-amber-400 flex items-center justify-center mb-4 font-bold text-lg">
+                    ✓
+                  </div>
+                  <div className="text-[16px] leading-snug font-medium text-white">{label}</div>
                 </div>
               ))}
-            </dl>
+            </div>
           </div>
         </section>
       )}
@@ -280,7 +282,7 @@ export default async function HomePage() {
             <div className="max-w-2xl">
               <p className="eyebrow">{t("Packages", "الباقات")}</p>
               <h2 className="mt-4 text-3xl leading-tight font-semibold tracking-tight text-navy-900 sm:text-[2.6rem] rtl:leading-snug">
-                {t("Clear prices, in Bahraini Dinars", "أسعار واضحة بالدينار البحريني")}
+                {t("Comprehensive packages to kickstart your journey to success", "باقات متكاملة تبدأ بها رحلة نجاحك")}
               </h2>
             </div>
             <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -299,12 +301,12 @@ export default async function HomePage() {
           <div>
             <p className="eyebrow">{t("Start here", "ابدأ من هنا")}</p>
             <h2 className="mt-4 text-3xl leading-tight font-semibold tracking-tight text-navy-900 sm:text-[2.6rem] rtl:leading-snug">
-              {t("Tell us what is not working", "أخبرنا بما لا يسير كما ينبغي")}
+              {t("Share your restaurant challenges and let's build the solution", "شاركنا تحديات مطعمك لنصنع الحل معاً ")}
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted">
               {t(
                 "A short message is enough. We reply within one working day to arrange a first conversation — no obligation",
-                "رسالة قصيرة تكفي. نرد خلال يوم عمل واحد لترتيب محادثة أولى — دون أي التزام",
+                "رسالة قصيرة تكفي, نرد خلال يوم عمل واحد لترتيب محادثة أولى — دون أي التزام",
               )}
             </p>
             <p className="mt-8 text-[15px] leading-relaxed text-navy-800">

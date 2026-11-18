@@ -184,7 +184,7 @@ export function SiteFooter({
           <p>
             © {new Date().getFullYear()} Luqma. {t("All rights reserved.", "جميع الحقوق محفوظة.")}
           </p>
-          <p>{t("Kingdom of Bahrain", "مملكة البحرين")}</p>
+          <p>{t("From the heart of the Kingdom of Bahrain.. shaping operational excellence", "من قلب مملكة البحرين.. نصنع فارق التشغيل")}</p>
         </div>
       </div>
     </footer>

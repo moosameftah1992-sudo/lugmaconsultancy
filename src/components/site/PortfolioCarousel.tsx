@@ -36,12 +36,20 @@ const PROVIDER_LABEL: Record<string, string> = {
 };
 
 function SlideCover({ slide }: { slide: PortfolioSlide }) {
-  if (slide.cover) {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={slide.cover} alt="" loading="lazy" className="absolute inset-0 size-full object-cover" />;
+  const imgSrc = slide.cover || (slide.kind === "image" ? slide.src : null);
+  if (imgSrc) {
+    return (
+      <div className="absolute inset-0 overflow-hidden bg-navy-950 flex items-center justify-center">
+        {/* خلفية ضبابية متكيفة تملأ الفراغات الجانبية بلون متناسق مع الصورة */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={imgSrc} alt="" loading="lazy" className="absolute inset-0 size-full object-cover filter blur-xl opacity-40 scale-110 pointer-events-none" aria-hidden="true" />
+        {/* الصورة الأصلية بالكامل دون أي قص أو اقتطاع */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={imgSrc} alt="" loading="lazy" className="relative z-10 size-full object-contain p-2" />
+      </div>
+    );
   }
   if (slide.kind === "video") {
-    // "#t=0.1" makes browsers paint the first frame as a poster.
     return (
       <video src={`${slide.src}#t=0.1`} muted playsInline preload="metadata" tabIndex={-1} className="absolute inset-0 size-full object-cover" />
     );
@@ -89,7 +97,6 @@ function Lightbox({
       else if (e.key === "ArrowRight") onStep(rtl ? -1 : 1);
       else if (e.key === "ArrowLeft") onStep(rtl ? 1 : -1);
       else if (e.key === "Tab") {
-        // Keep keyboard focus inside the dialog.
         const items = dialogRef.current?.querySelectorAll<HTMLElement>("button, iframe, video, a[href]");
         if (!items?.length) return;
         const first = items[0];
@@ -149,10 +156,10 @@ function Lightbox({
           </button>
         )}
 
-        <div className="flex h-full min-w-0 flex-1 items-center justify-center" onClick={(e) => e.stopPropagation()}>
+        <div className="relative flex h-full min-w-0 flex-1 items-center justify-center overflow-hidden rounded-xl bg-navy-950" onClick={(e) => e.stopPropagation()}>
           {slide.kind === "image" && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={slide.id} src={slide.src} alt={slide.title} className="max-h-full max-w-full rounded-xl object-contain" />
+            <img key={slide.id} src={slide.src} alt={slide.title} className="relative z-10 max-h-full max-w-full object-contain p-2 sm:p-4" />
           )}
           {slide.kind === "video" && (
             <video key={slide.id} src={slide.src} controls autoPlay playsInline className="max-h-full max-w-full rounded-xl bg-black" />
@@ -205,11 +212,6 @@ function Lightbox({
   );
 }
 
-/**
- * Portfolio showcase: a circular carousel that advances every 3 seconds. Any item opens
- * instantly in an in-page viewer — uploads play natively, external links (Instagram
- * reels, YouTube…) play in an embedded player without leaving the site.
- */
 export function PortfolioCarousel({ slides }: { slides: PortfolioSlide[] }) {
   const t = useT();
   const rtl = useLocale() === "ar";
@@ -223,7 +225,6 @@ export function PortfolioCarousel({ slides }: { slides: PortfolioSlide[] }) {
     },
     { active: 0, prev: 0 },
   );
-  /** null = follow the default (auto-play unless the visitor prefers reduced motion). */
   const [userPlaying, setUserPlaying] = useState<boolean | null>(null);
   const [engaged, setEngaged] = useState(false);
   const [open, setOpen] = useState<number | null>(null);
@@ -252,7 +253,8 @@ export function PortfolioCarousel({ slides }: { slides: PortfolioSlide[] }) {
       onFocusCapture={() => setEngaged(true)}
       onBlurCapture={() => setEngaged(false)}
     >
-      <div className="relative h-[25rem] overflow-hidden sm:h-[31rem]">
+      {/* تقليل ارتفاع الحاوية الكلية لتأخذ مساحة أصغر وأكثر تناسقاً في الصفحة الرئيسية */}
+      <div className="relative h-[18rem] overflow-hidden sm:h-[22rem] lg:h-[26rem]">
         {slides.map((slide, i) => {
           const offset = offsetOf(i, active, n);
           const wrapped = Math.abs(offset - offsetOf(i, prev, n)) > 1;
@@ -269,7 +271,8 @@ export function PortfolioCarousel({ slides }: { slides: PortfolioSlide[] }) {
                 go(i);
                 setOpen(i);
               }}
-              className="group absolute top-0 left-1/2 h-full w-[78%] cursor-pointer overflow-hidden rounded-3xl bg-navy-900 text-start shadow-lift sm:w-[56%] lg:w-[44%]"
+              // تصغير عرض البطاقات والمربعات (Zoom Out) مع الحفاظ على أبعاد المربع الكامل aspect-square
+              className="group absolute top-0 left-1/2 aspect-square w-[68%] cursor-pointer overflow-hidden rounded-3xl bg-navy-900 text-start shadow-lift sm:w-[42%] lg:w-[32%]"
               style={{
                 transform: `translateX(calc(-50% + ${offset * direction * 104}%)) scale(${isActive ? 1 : 0.9})`,
                 opacity: isActive ? 1 : visible ? 0.45 : 0,
@@ -279,21 +282,22 @@ export function PortfolioCarousel({ slides }: { slides: PortfolioSlide[] }) {
               }}
             >
               <SlideCover slide={slide} />
-              <span className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/10 to-transparent" />
-              <span className="absolute start-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-medium text-navy-900">
+              <span className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/20 to-transparent pointer-events-none" />
+              <span className="absolute start-4 top-4 z-20 rounded-full bg-white/95 px-3 py-1 text-xs font-medium text-navy-900 shadow-sm">
                 {bi(t, biLabel("portfolioCategory", slide.category))}
               </span>
               {slide.kind !== "image" && (
-                <span className="absolute top-1/2 left-1/2 grid size-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-amber-400 text-navy-950 shadow-lift transition-transform duration-200 group-hover:scale-110">
+                <span className="absolute top-1/2 left-1/2 z-20 grid size-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-amber-400 text-navy-950 shadow-lift transition-transform duration-200 group-hover:scale-110">
                   <Play className="size-6 translate-x-0.5 fill-current" aria-hidden="true" />
                 </span>
               )}
-              <span className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-                <span className="block text-lg leading-snug font-semibold text-white sm:text-xl">{slide.title}</span>
-                {slide.description && <span className="mt-1.5 line-clamp-2 block text-sm leading-relaxed text-white/80">{slide.description}</span>}
+              <span className="absolute inset-x-0 bottom-0 z-20 p-4 sm:p-5 bg-gradient-to-t from-navy-950/95 via-navy-950/70 to-transparent">
+                <span className="block text-base leading-snug font-semibold text-white sm:text-lg">{slide.title}</span>
+                {slide.description && <span className="mt-1 line-clamp-2 block text-xs sm:text-sm leading-relaxed text-white/80">{slide.description}</span>}
               </span>
+
               {isActive && n > 1 && (
-                <span className="absolute inset-x-0 bottom-0 h-1 bg-white/15">
+                <span className="absolute inset-x-0 bottom-0 z-30 h-1 bg-white/15">
                   <span
                     key={`${active}-${running}`}
                     className="block h-full bg-amber-400"
