@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+/*
+ * Luqma brand system — light theme.
+ * Deep navy carries text and structure, vibrant emerald marks progress and
+ * confirmation, warm amber is reserved for highlights and calls to action.
+ */
+@theme {
+  --font-sans: "Readex Pro Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+
+  --color-paper: #faf8f4;
+  --color-line: #e6e2d9;
+  --color-muted: #55627a;
+
+  --color-navy-50: #f2f5fa;
+  --color-navy-100: #e1e8f2;
+  --color-navy-200: #c3d0e3;
+  --color-navy-300: #94aacb;
+  --color-navy-400: #5f7dab;
+  --color-navy-500: #3e5c8d;
+  --color-navy-600: #2b4673;
+  --color-navy-700: #1c3560;
+  --color-navy-800: #12284b;
+  --color-navy-900: #0b1f3d;
+  --color-navy-950: #06132a;
+
+  --color-emerald-50: #eaf8ef;
+  --color-emerald-100: #d0f0dc;
+  --color-emerald-200: #a3e1bc;
+  --color-emerald-300: #6fcd97;
+  --color-emerald-400: #3bb872;
+  --color-emerald-500: #12a857;
+  --color-emerald-600: #0a7f40;
+  --color-emerald-700: #086635;
+  --color-emerald-800: #0a5230;
+  --color-emerald-900: #094328;
+
+  --color-amber-50: #fff6e5;
+  --color-amber-100: #feeac2;
+  --color-amber-200: #fdd68a;
+  --color-amber-300: #fbbd4b;
+  --color-amber-400: #f8a521;
+  --color-amber-500: #f39209;
+  --color-amber-600: #c96a04;
+  --color-amber-700: #9a4c07;
+
+  --shadow-soft: 0 1px 2px rgb(11 31 61 / 0.04), 0 12px 32px -16px rgb(11 31 61 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(11 31 61 / 0.05), 0 24px 48px -20px rgb(11 31 61 / 0.28);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-navy-900);
+    font-family: var(--font-sans);
+    font-weight: 400;
+  }
+  /* Arabic needs more leading, and letter-spacing breaks its joined letterforms. */
+  html[lang="ar"] body {
+    line-height: 1.75;
+  }
+  html[lang="ar"] * {
+    letter-spacing: 0 !important;
+  }
+  ::selection {
+    background: var(--color-amber-200);
+    color: var(--color-navy-950);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-emerald-600);
+    outline-offset: 2px;
+  }
+  summary {
+    cursor: pointer;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium whitespace-nowrap transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-55;
+  }
+  .btn-sm {
+    @apply min-h-9 px-3.5 py-1.5 text-[13px];
+  }
+  .btn-primary {
+    @apply bg-navy-900 text-white hover:bg-navy-700;
+  }
+  .btn-accent {
+    @apply bg-emerald-600 text-white hover:bg-emerald-700;
+  }
+  .btn-amber {
+    @apply bg-amber-400 text-navy-950 hover:bg-amber-300;
+  }
+  .btn-ghost {
+    @apply border border-line bg-white text-navy-900 hover:border-navy-300 hover:bg-navy-50;
+  }
+  .btn-danger {
+    @apply border border-red-200 bg-white text-red-700 hover:bg-red-50;
+  }
+  .input {
+    @apply block min-h-11 w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-[15px] text-navy-900 placeholder:text-navy-300 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none disabled:bg-navy-50 disabled:text-navy-400;
+  }
+  textarea.input {
+    @apply leading-relaxed;
+  }
+  .label {
+    @apply mb-1.5 block text-[13px] font-medium text-navy-800;
+  }
+  .hint {
+    @apply mt-1.5 text-[13px] leading-relaxed text-muted;
+  }
+  .card {
+    @apply rounded-2xl border border-line bg-white;
+  }
+  .eyebrow {
+    @apply text-[13px] font-semibold tracking-[0.14em] text-emerald-700 uppercase;
+  }
+  .check {
+    @apply size-[18px] shrink-0 cursor-pointer rounded border-navy-300 accent-emerald-600;
+  }
+  .prose-plain {
+    @apply text-[15px] leading-relaxed whitespace-pre-line text-navy-800;
+  }
+}
+
+/* Carousel auto-advance indicator: fills over the 3-second dwell time. */
+@keyframes lq-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes lq-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.lq-fade-in {
+  animation: lq-fade-in 0.25s ease-out both;
+}

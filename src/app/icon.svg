@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <defs>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FBC043"/>
+      <stop offset="1" stop-color="#EC7A08"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#15A858"/>
+      <stop offset="1" stop-color="#0B6A4C"/>
+    </linearGradient>
+    <linearGradient id="swoosh" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#0A7A47"/>
+      <stop offset="1" stop-color="#1CC062"/>
+    </linearGradient>
+  </defs>
+  <path d="M18 24c0-7 5-12 12-12h6v40L18 62z" fill="#0B2545"/>
+  <path d="M14 80c0-5 3-9 7-11l17-9v12h46c-2 9-9 14-19 14H24c-6 0-10-2-10-6z" fill="#0B2545"/>
+  <path d="M44 60l7-2.5V70h-7zM55 53l7-2.5V70h-7zM66 46l7-2.5V70h-7z" fill="url(#bar)"/>
+  <g fill="url(#leaf)">
+    <path d="M0 0C-5-8-5-20 0-28 5-20 5-8 0 0Z" transform="translate(45 45) rotate(-12) scale(.95)"/>
+    <path d="M0 0C-5-8-5-20 0-28 5-20 5-8 0 0Z" transform="translate(45 45) rotate(13) scale(1.1)"/>
+    <path d="M0 0C-5-8-5-20 0-28 5-20 5-8 0 0Z" transform="translate(45 45) rotate(38)"/>
+    <path d="M0 0C-5-8-5-20 0-28 5-20 5-8 0 0Z" transform="translate(45 45) rotate(61) scale(.76)"/>
+  </g>
+  <path d="M4 84C6 54 64 40 78 23C74 44 26 56 10 88Z" fill="url(#swoosh)" stroke="#fff" stroke-width="2.5" stroke-linejoin="round" paint-order="stroke"/>
+</svg>
