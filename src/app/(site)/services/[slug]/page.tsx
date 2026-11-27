@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PackageCard, ServiceIcon } from "@/components/site/parts";
+import { ServiceViewTracker } from "@/components/site/ServiceViewTracker";
 import { makeT, pick } from "@/i18n";
 import { getLocale } from "@/i18n/server";
 import { getContract, getServiceBySlug, listPackages } from "@/lib/data";
@@ -29,9 +30,11 @@ export default async function ServicePage({ params }: Props) {
 
   const [pkgs, contract] = await Promise.all([listPackages({ serviceId: service.id, activeOnly: true }), getContract(service.id)]);
   const deliverables = toLines(pick(locale, service.deliverablesEn, service.deliverablesAr));
+  const title = pick(locale, service.titleEn, service.titleAr);
 
   return (
     <>
+      <ServiceViewTracker slug={service.slug} title={title} />
       <section className="border-b border-line bg-white">
         <div className="mx-auto max-w-6xl px-4 pt-8 pb-14 sm:px-6 lg:pb-20">
           <Link href="/#services" className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-navy-700 hover:text-emerald-700">
@@ -44,7 +47,7 @@ export default async function ServicePage({ params }: Props) {
                 <ServiceIcon slug={service.slug} className="size-7" />
               </span>
               <h1 className="mt-6 text-4xl leading-[1.1] font-semibold tracking-tight text-balance text-navy-900 sm:text-5xl rtl:leading-snug">
-                {pick(locale, service.titleEn, service.titleAr)}
+                {title}
               </h1>
               <p className="mt-5 text-xl leading-relaxed text-navy-800">{pick(locale, service.summaryEn, service.summaryAr)}</p>
               <p className="mt-4 text-[17px] leading-relaxed text-muted">{pick(locale, service.descriptionEn, service.descriptionAr)}</p>

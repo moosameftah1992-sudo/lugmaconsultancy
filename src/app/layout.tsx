@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "@fontsource-variable/readex-pro";
 import "./globals.css";
+import MetaPixel from "@/components/MetaPixel";
 import { dirOf } from "@/i18n";
 import { LocaleProvider } from "@/i18n/client";
 import { getLocale, getT } from "@/i18n/server";
@@ -12,7 +13,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: appUrl ? new URL(appUrl) : undefined,
     title: {
-      default: t("Luqma — Restaurant Solutions & Operations in Bahrain", "لقمة — حلول وتشغيل المطاعم في البحرين"),
+      default: t(
+        "Luqma — Restaurant Solutions & Operations in Bahrain",
+        "لقمة — حلول وتشغيل المطاعم في البحرين",
+      ),
       template: "%s · Luqma",
     },
     description: t(
@@ -34,6 +38,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     <html lang={locale} dir={dirOf(locale)}>
       <body className="min-h-screen antialiased">
         <LocaleProvider locale={locale}>{children}</LocaleProvider>
+        <MetaPixel />
       </body>
     </html>
   );

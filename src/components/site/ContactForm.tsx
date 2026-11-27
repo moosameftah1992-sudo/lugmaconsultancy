@@ -2,6 +2,7 @@
 
 import { CircleCheck } from "lucide-react";
 import { useState, type FormEvent } from "react";
+import { trackMetaEvent } from "@/components/MetaPixel";
 import { useT } from "@/i18n/client";
 
 /** "Book a consultation" form. Posts to /api/inquiries; messages land in the admin inbox. */
@@ -17,14 +18,22 @@ export function ContactForm({ services, defaultService }: { services: Array<{ sl
     setBusy(true);
     setError(null);
     try {
+      const payload = Object.fromEntries(new FormData(e.currentTarget));
       const res = await fetch("/api/inquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(new FormData(e.currentTarget))),
+        body: JSON.stringify(payload),
       });
       const json = (await res.json().catch(() => null)) as { error?: string } | null;
-      if (!res.ok) setError(json?.error ?? t("We could not send your message. Please try again.", "تعذّر إرسال رسالتك. يرجى المحاولة مجددًا."));
-      else setSent(true);
+      if (!res.ok) {
+        setError(json?.error ?? t("We could not send your message. Please try again.", "تعذّر إرسال رسالتك. يرجى المحاولة مجددًا."));
+      } else {
+        trackMetaEvent("Lead", {
+          content_name: "Contact Form",
+          service: String(payload.service || "general"),
+        });
+        setSent(true);
+      }
     } catch {
       setError(t("You appear to be offline. Check your connection and try again.", "يبدو أنك غير متصل. تحقق من اتصالك وحاول مجددًا."));
     } finally {
