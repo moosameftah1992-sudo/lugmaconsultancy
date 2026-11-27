@@ -296,7 +296,7 @@ export default async function HomePage() {
         </section>
       )}
             {/* ───────────── FAQ ───────────── */}
-<FaqSection locale={locale} />
+      <FaqSection locale={locale} />
 
       {/* ───────────── Contact ───────────── */}
       <section id="contact">
@@ -322,6 +322,74 @@ export default async function HomePage() {
           <ContactForm services={serviceOptions} />
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.luqma.store/#organization",
+                name: "Luqma — لقمة لاستشارات وتشغيل المطاعم",
+                alternateName: "Luqma",
+                url: "https://www.luqma.store/",
+                email: "info@luqma.store",
+                telephone: "+97336119511",
+                address: {
+                  "@type": "PostalAddress",
+                  addressLocality: "Manama",
+                  addressCountry: "BH",
+                },
+                areaServed: {
+                  "@type": "Country",
+                  name: "Bahrain",
+                },
+                contactPoint: {
+                  "@type": "ContactPoint",
+                  url: "https://www.luqma.store/#contact",
+                  telephone: "+97336119511",
+                  contactType: "customer support",
+                  areaServed: "BH",
+                  availableLanguage: ["en", "ar"],
+                },
+              },
+              {
+                "@type": "WebSite",
+                "@id": "https://www.luqma.store/#website",
+                url: "https://www.luqma.store/",
+                name: "Luqma",
+                publisher: {
+                  "@id": "https://www.luqma.store/#organization",
+                },
+              },
+              {
+                "@type": "FAQPage",
+                "@id": "https://www.luqma.store/#faq",
+                mainEntity: [
+                  {
+                    "@type": "Question",
+                    name: "When does my restaurant or café in Bahrain need operational intervention from Luqma?",
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: "We recommend bringing in the Luqma team when you face shrinking profit margins despite steady sales, unexplained spikes in food and inventory costs, slow service and bottlenecks in the kitchen or dining room, or when preparing to open a new branch and establish clear Standard Operating Procedures (SOPs) that prevent guesswork.",
+                    },
+                  },
+                  {
+                    "@type": "Question",
+                    name: "How can I book a consultation or get started with the Luqma team?",
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: "You can reach out directly through the contact section on our website at https://www.luqma.store/#contact to book a diagnostic session and discuss your restaurant or café.",
+                    },
+                  },
+                ],
+              },
+            ],
+          }),
+        }}
+      />
     </>
   );
 }
