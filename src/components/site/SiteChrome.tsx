@@ -15,6 +15,7 @@ export function SiteHeader({ signedIn }: { signedIn: boolean }) {
     ["/#services", t("Services", "الخدمات")],
     ["/#work", t("Our work", "أعمالنا")],
     ["/#process", t("How we work", "طريقة عملنا")],
+    ["/#faq", t("FAQ", "الأسئلة الشائعة")],
     ["/#contact", t("Contact", "تواصل معنا")],
   ];
   const portalHref = signedIn ? "/portal" : "/portal/login";

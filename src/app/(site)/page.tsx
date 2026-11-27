@@ -1,3 +1,4 @@
+import { FaqSection } from "@/components/site/FaqSection";
 import { ArrowRight, ArrowUpRight, BellRing, FileCheck2, LockKeyhole } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -294,6 +295,8 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+            {/* ───────────── FAQ ───────────── */}
+<FaqSection locale={locale} />
 
       {/* ───────────── Contact ───────────── */}
       <section id="contact">
